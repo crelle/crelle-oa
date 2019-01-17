@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!-- 配置为开发模式 -->
+	<constant name="struts.devMode" value="false" />
+	<!-- 把action扩展名改为.do -->
+	<constant name="struts.action.extension" value="do" />
+	<!-- 把主题设为simple -->
+	<constant name="struts.ui.theme" value="simple" />
+
+	<package name="default" namespace="/" extends="struts-default"> 
+		<interceptors>
+    		<!-- 声明拦截器 -->
+    		<interceptor name="checkPrivilege" class="com.yilaiwen.cn.util.CheckPrivilegeInterceptor"></interceptor>
+    		
+    		<!-- 配置我们自己的拦截器栈 -->
+    		<interceptor-stack name="myDefaultStack">
+    			<interceptor-ref name="checkPrivilege"></interceptor-ref>
+    			<interceptor-ref name="defaultStack"></interceptor-ref>
+    		</interceptor-stack>
+    	</interceptors>
+    	
+    	<!-- 配置默认的拦截器栈 -->
+    	<default-interceptor-ref name="myDefaultStack"></default-interceptor-ref>
+		
+		<!-- 配置全局的Result -->
+    	<global-results>
+    		<result name="loginUI">/jsp/loginout/loginUI.jsp</result>
+    		<result name="noPrivilegeUI">/noPrivilegeUI.jsp</result>
+    	</global-results>
+		
+		<!-- 配置测试用的action -->
+    	<action name="Test" class="com.yilaiwen.cn.action.TestAction">
+    		<result name="success">/test.jsp</result>
+    	</action>
+		
+		<!-- 岗位管理 -->
+		<action name="role_*" class="com.yilaiwen.cn.action.RoleAction" method="{1}">
+			<result name="toList" type="redirectAction">role_list</result>
+			<result name="list">/jsp/role/list.jsp</result>
+			<result name="saveUI">/jsp/role/saveUI.jsp</result>
+			<result name="setPrivilegeUI">/jsp/role/setPrivilegeUI.jsp</result>
+		</action>
+		<!-- 部门管理 -->
+		<action name="department_*" class="departmentAction"
+			method="{1}">
+			<result name="toList" type="redirectAction">department_list?parentId=${parentId}
+			</result>
+			<result name="list">/jsp/department/list.jsp</result>
+			<result name="saveUI">/jsp/department/saveUI.jsp</result>
+		</action>
+
+		<!-- 用户管理 -->
+		<action name="user_*" class="com.yilaiwen.cn.action.UserAction" method="{1}">
+			<result name="toList" type="redirectAction">user_list?parentId=${parentId}
+			</result>
+			<result name="list">/jsp/user/list.jsp</result>
+			<result name="saveUI">/jsp/user/saveUI.jsp</result>
+		</action>
+		
+		<!-- 登录注销功能 -->
+    	<action name="loginout_*" class="com.yilaiwen.cn.action.LoginoutAction" method="{1}">
+    		<result name="logout">/jsp/loginout/logout.jsp</result>
+    		<result name="toHome" type="redirect">/index.jsp</result>
+    	</action>
+    	
+		<!-- 首页 -->
+		<action name="home_*" class="com.yilaiwen.cn.action.HomeAction" method="{1}">
+		<result name="{1}">/jsp/home/{1}.jsp</result>
+		</action>
+		
+		<!-- 版块管理 -->
+    	<action name="forumManage_*" class="com.yilaiwen.cn.action.ForumManageAction" method="{1}">
+    		<result name="list">/jsp/forumManage/list.jsp</result>
+    		<result name="saveUI">/jsp/forumManage/saveUI.jsp</result>
+    		<result name="toList" type="redirectAction">forumManage_list</result>
+    	</action>
+    	
+    	<!-- 论坛：版块相关功能 -->
+    	<action name="forum_*" class="com.yilaiwen.cn.action.ForumAction" method="{1}">
+    		<result name="list">/jsp/forum/list.jsp</result>
+    		<result name="show">/jsp/forum/show.jsp</result>
+    	</action>
+    	
+    	<!-- 论坛：主题相关功能 -->
+    	<action name="topic_*" class="com.yilaiwen.cn.action.TopicAction" method="{1}">
+    		<result name="show">/jsp/topic/show.jsp</result>
+    		<result name="addUI">/jsp/topic/addUI.jsp</result>
+    		<result name="toShow" type="redirectAction">topic_show?id=${topicId}</result>
+    	</action>
+    	
+    	<!-- 论坛：回复相关功能 -->
+    	<action name="reply_*" class="com.yilaiwen.cn.action.ReplyAction" method="{1}">
+    		<result name="addUI">/jsp/reply/addUI.jsp</result>
+    		<result name="toTopicShow" type="redirectAction">topic_show?id=${topicId}</result>
+    	</action>
+    	
+    	<!-- 流程定义管理 -->
+    	<action name="processDefinition_*" class="com.yilaiwen.cn.action.ProcessDefinitionAction" method="{1}">
+    		<result name="list">/jsp/processDefinition/list.jsp</result>
+    		<result name="addUI">/jsp/processDefinition/addUI.jsp</result>
+    		<result name="toList" type="redirectAction">processDefinition_list</result>
+    		
+    		<!-- 下载用的用result是stream类型 -->
+    		<result name="showProcessImage" type="stream">
+    			<param name="inputName">inputStream</param>
+    		</result>
+    	</action>
+    	
+    	<!-- 申请模板管理 -->
+    	<action name="template_*" class="templateAction" method="{1}">
+    		<result name="list">/jsp/template/list.jsp</result>
+    		<result name="saveUI">/jsp/template/saveUI.jsp</result>
+    		<result name="toList" type="redirectAction">template_list</result>
+    		<!-- 下载用的用result是stream类型 -->
+    		<result name="download" type="stream">
+    			<param name="inputName">inputStream</param>
+    			<param name="contentType">application/octet-stream</param>
+    			<param name="contentDisposition">attachment;filename="${#fileName}.doc"</param>
+    		</result>
+    	</action>
+    		<!-- 审批流转 -->
+    	<action name="flow_*" class="flowAction" method="{1}">
+    		<result name="templateList">/jsp/flow/templateList.jsp</result>
+    		<result name="submitUI">/jsp/flow/submitUI.jsp</result>
+    		<result name="myApplicationList">/jsp/flow/myApplicationList.jsp</result>
+    		<result name="toMyApplicationList" type="redirectAction">flow_myApplicationList</result>
+
+    		<result name="myTaskList">/jsp/flow/myTaskList.jsp</result>
+    		<result name="approveUI">/jsp/flow/approveUI.jsp</result>
+    		<result name="approvedHistory">/jsp/flow/approvedHistory.jsp</result>
+    		<result name="toMyTaskList" type="redirectAction">flow_myTaskList</result>
+    	</action>
+	</package>    
+
+</struts>

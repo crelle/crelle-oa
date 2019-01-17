@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.yilaiwen.cn.bean">
+
+	<class name="Role" table="t_role">
+		<id name="id">
+			<generator class="native" />
+		</id>
+		<property name="name" column="name"></property>
+		<property name="description" column="description"></property>
+		<!-- users属性表示我与User多对多的关系 -->
+		<set name="users" table="t_user_role">
+			<key column="roleId"></key>
+			<many-to-many class="User" column="userId"></many-to-many>
+		</set>
+		<!-- privileges属性表示我与Privilege多对多的管理 -->
+		<set name="privileges" table="t_privilege_role" lazy="false">
+			<key column="roleId"></key>
+			<many-to-many class="Privilege" column="privilegeId"></many-to-many>
+		</set>
+	</class>
+
+</hibernate-mapping>
