@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-module
   type="WEB"
-  name="ItcastOA"
+  name="crelle-oa"
   id="myeclipse.1372304015203"
-  context-root="/ItcastOA"
+  context-root="/crelle-oa"
   j2ee-spec="5.0"
-  archive="ItcastOA.war">
+  archive="crelle-oa.war">
   <attributes>
     <attribute name="webrootdir" value="WebRoot" />
   </attributes>

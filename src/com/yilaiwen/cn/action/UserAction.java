@@ -150,7 +150,7 @@ public class UserAction extends ModelDrivenBaseAction<User>
 	{
 				// 1，从数据库中取出原对象
 				User user = userService.getById(model.getId());
-				String md5 = DigestUtils.shaHex("1234");
+				String md5 = DigestUtils.md5Hex("1234");
 				// 2，设置要修改的属性
 				user.setPassword(md5);
 				// 3，更新到数据库
