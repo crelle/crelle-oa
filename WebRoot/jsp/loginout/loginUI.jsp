@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv=Content-Type content="text/html; charset=gbk" />
-	<title>Itcast OA</title>
+	<title>CRELLE OA</title>
 	<%@ include file="/jsp/public/header.jspf" %>
 	<link href="${pageContext.request.contextPath}/style/blue/login.css" type=text/css rel=stylesheet />
 	<script type="text/javascript">

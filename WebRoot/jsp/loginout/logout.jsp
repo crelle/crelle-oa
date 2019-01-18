@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-	<title>您已退出Itcast OA系统</title>
+	<title>您已退出CRELLE OA系统</title>
 	<%@ include file="/jsp/public/header.jspf" %>
 	<link href="${pageContext.request.contextPath}/style/blue/logout.css" rel="stylesheet" type="text/css" />
 </head>
