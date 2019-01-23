@@ -38,7 +38,7 @@ public class DepartmentAction extends ModelDrivenBaseAction<Department>
 		}
 		else
 		{
-			//显示制定部门的子部门列表
+			//显示指定部门的子部门列表
 			departmentList=departmentService.findChildren(parentId);
 			Department parent = departmentService.getById(parentId);
 			ActionContext.getContext().put("parent", parent);
